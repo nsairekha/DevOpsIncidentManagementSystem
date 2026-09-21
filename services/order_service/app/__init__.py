@@ -1,0 +1,1 @@
+"""Order microservice (importable path; folder also present as order-service)."""

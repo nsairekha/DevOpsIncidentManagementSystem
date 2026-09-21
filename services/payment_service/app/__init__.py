@@ -1,0 +1,1 @@
+"""Payment microservice (importable path; folder also present as payment-service)."""

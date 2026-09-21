@@ -1,0 +1,27 @@
+# AI-Based Cloud Observability System - core foundation dependencies
+# Stable versions compatible with Python 3.11+ (tested against 3.13)
+
+# --- Web framework ---
+fastapi==0.141.1
+uvicorn[standard]==0.53.0
+pydantic==2.13.5
+pydantic-settings==2.15.0
+python-dotenv==1.2.3
+
+# --- Data / ML ---
+pandas==3.0.6
+numpy==2.5.3
+scikit-learn==1.9.1
+networkx==3.6.1
+
+# --- Monitoring / cloud ---
+prometheus-client==0.26.0
+boto3==1.43.98
+
+# --- HTTP clients ---
+httpx==0.28.1
+requests==2.34.2
+
+# --- Testing ---
+pytest==9.1.1
+pytest-cov==7.1.0

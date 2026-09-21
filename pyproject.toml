@@ -1,0 +1,12 @@
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = [
+    "tests",
+    "backend/tests",
+    "services/common/tests",
+    "services/user_service/tests",
+    "services/order_service/tests",
+    "services/payment_service/tests",
+    "services/notification_service/tests",
+]
+addopts = "--cov=backend --cov=dataset --cov=ai --cov=monitoring --cov=agents --cov=blockchain --cov=services --cov-report=term-missing"

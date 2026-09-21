@@ -1,0 +1,24 @@
+# Prometheus scrape configuration (STEP 5).
+# Scrapes the four distributed microservices over the Compose network using
+# Docker service-name DNS (never localhost for container-to-container traffic).
+
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: "user-service"
+    static_configs:
+      - targets: ["user-service:8001"]
+
+  - job_name: "order-service"
+    static_configs:
+      - targets: ["order-service:8002"]
+
+  - job_name: "payment-service"
+    static_configs:
+      - targets: ["payment-service:8003"]
+
+  - job_name: "notification-service"
+    static_configs:
+      - targets: ["notification-service:8004"]

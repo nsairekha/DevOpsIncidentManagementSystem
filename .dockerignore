@@ -1,0 +1,36 @@
+# ============================================================
+# Docker build context exclusions
+# ============================================================
+
+# Version control
+.git
+.gitignore
+
+# Python / virtual environments
+.venv
+venv
+__pycache__
+*.py[cod]
+*.egg-info
+.pytest_cache
+.coverage
+htmlcov
+
+# Configuration / secrets
+.env
+.env.*
+!.env.example
+
+# Tests are not needed in the image (and do not ship into production).
+tests
+coverage/
+
+# Other project areas not part of this image.
+dashboard
+k8s
+docs
+scripts
+data
+node_modules
+.next
+*.log

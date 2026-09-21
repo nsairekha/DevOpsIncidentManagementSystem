@@ -1,0 +1,1 @@
+"""Normalization of source observations into canonical MetricRecords."""

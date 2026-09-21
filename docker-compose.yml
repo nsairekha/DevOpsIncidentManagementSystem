@@ -1,0 +1,130 @@
+# Distributed microservices (STEP 4): user, order, payment, notification.
+# Run with: docker compose up --build
+# Stop with: docker compose down
+#
+# Services talk to each other over the observability-network using Compose
+# DNS names (http://payment-service:8003, ...). Host port mappings stay
+# 1:1 with the local-development ports (8001-8004).
+
+services:
+  user-service:
+    build:
+      context: .
+      dockerfile: services/user_service/Dockerfile
+    image: observability-user-service:latest
+    ports:
+      - "8001:8001"
+    environment:
+      - SERVICE_NAME=user-service
+      - APP_ENV=${APP_ENV:-development}
+      - PORT=8001
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8001/health', timeout=5).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    networks:
+      - observability-network
+    restart: unless-stopped
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: services/payment_service/Dockerfile
+    image: observability-payment-service:latest
+    ports:
+      - "8003:8003"
+    environment:
+      - SERVICE_NAME=payment-service
+      - APP_ENV=${APP_ENV:-development}
+      - PORT=8003
+      - REQUEST_TIMEOUT_SECONDS=${REQUEST_TIMEOUT_SECONDS:-5}
+      - SIMULATED_LATENCY_MS=${PAYMENT_SIMULATED_LATENCY_MS:-0}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8003/health', timeout=5).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    networks:
+      - observability-network
+    restart: unless-stopped
+
+  notification-service:
+    build:
+      context: .
+      dockerfile: services/notification_service/Dockerfile
+    image: observability-notification-service:latest
+    ports:
+      - "8004:8004"
+    environment:
+      - SERVICE_NAME=notification-service
+      - APP_ENV=${APP_ENV:-development}
+      - PORT=8004
+      - REQUEST_TIMEOUT_SECONDS=${REQUEST_TIMEOUT_SECONDS:-5}
+      - SIMULATED_LATENCY_MS=${NOTIFICATION_SIMULATED_LATENCY_MS:-0}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8004/health', timeout=5).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    networks:
+      - observability-network
+    restart: unless-stopped
+
+  order-service:
+    build:
+      context: .
+      dockerfile: services/order_service/Dockerfile
+    image: observability-order-service:latest
+    ports:
+      - "8002:8002"
+    environment:
+      - SERVICE_NAME=order-service
+      - APP_ENV=${APP_ENV:-development}
+      - PORT=8002
+      - PAYMENT_SERVICE_URL=http://payment-service:8003
+      - NOTIFICATION_SERVICE_URL=http://notification-service:8004
+      - REQUEST_TIMEOUT_SECONDS=${REQUEST_TIMEOUT_SECONDS:-5}
+      - SIMULATED_LATENCY_MS=${ORDER_SIMULATED_LATENCY_MS:-0}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8002/health', timeout=5).status == 200 else 1)"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    depends_on:
+      payment-service:
+        condition: service_healthy
+      notification-service:
+        condition: service_healthy
+    networks:
+      - observability-network
+    restart: unless-stopped
+
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    depends_on:
+      user-service:
+        condition: service_healthy
+      order-service:
+        condition: service_healthy
+      payment-service:
+        condition: service_healthy
+      notification-service:
+        condition: service_healthy
+    networks:
+      - observability-network
+    restart: unless-stopped
+
+networks:
+  observability-network:
+    driver: bridge

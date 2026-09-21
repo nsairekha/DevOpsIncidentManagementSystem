@@ -1,0 +1,43 @@
+[
+  {
+    "affected_services": [
+      "payment-service",
+      "order-service"
+    ],
+    "description": "PAYMENT_SIMULATED_LATENCY_MS=500 with steady order traffic",
+    "end_time": "2026-09-21T05:20:46+00:00",
+    "executed": true,
+    "scenario_id": "LATENCY_002",
+    "scenario_type": "latency_anomaly",
+    "start_time": "2026-09-21T05:20:00+00:00"
+  },
+  {
+    "affected_services": [
+      "order-service"
+    ],
+    "description": "payment-service stopped; order traffic returned 503 payment_service_unavailable. Cascade observed: notification-service idle, order payment failures",
+    "end_time": "2026-09-21T05:22:17+00:00",
+    "executed": true,
+    "scenario_id": "DEPFAIL_002",
+    "scenario_type": "dependency_failure",
+    "start_time": "2026-09-21T05:21:44+00:00"
+  },
+  {
+    "affected_services": [],
+    "description": "20-order burst in ~3s (labeled at 10 s bin granularity)",
+    "end_time": "2026-09-21T05:23:23+00:00",
+    "executed": true,
+    "scenario_id": "TRAFFIC_002",
+    "scenario_type": "traffic_anomaly",
+    "start_time": "2026-09-21T05:23:20+00:00"
+  },
+  {
+    "affected_services": [],
+    "description": "24 invalid requests at 05:24:18 inside this 10 s bin (labeled at bin granularity)",
+    "end_time": "2026-09-21T05:24:19+00:00",
+    "executed": true,
+    "scenario_id": "ERROR_002",
+    "scenario_type": "error_rate_anomaly",
+    "start_time": "2026-09-21T05:24:10+00:00"
+  }
+]

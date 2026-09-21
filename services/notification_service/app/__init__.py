@@ -1,0 +1,1 @@
+"""Notification microservice (importable path; folder also present as notification-service)."""
