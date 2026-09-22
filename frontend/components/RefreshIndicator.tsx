@@ -48,21 +48,21 @@ export default function RefreshIndicator({
   }, [onRefresh, intervalSeconds, isPaused]);
 
   return (
-    <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-surface-subtle border border-border text-[11px] font-mono text-slate-400">
+    <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-md bg-white border border-slate-200 text-[11px] text-slate-500">
       <span className="relative flex h-2 w-2">
         {!isPaused && (
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75" />
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75" />
         )}
         <span
           className={`relative inline-flex rounded-full h-2 w-2 ${
-            isPaused ? "bg-slate-500" : "bg-cyan-400"
+            isPaused ? "bg-slate-400" : "bg-indigo-500"
           }`}
         />
       </span>
 
       <span>
         Last updated:{" "}
-        <strong className="text-slate-200">
+        <strong className="text-slate-900">
           {lastUpdated ? `${secondsAgo}s ago` : "Waiting..."}
         </strong>
       </span>
@@ -71,17 +71,17 @@ export default function RefreshIndicator({
         onClick={() => onRefresh()}
         disabled={isRefreshing}
         title="Refresh now"
-        className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+        className="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
       >
         <RefreshCw
-          className={`h-3 w-3 ${isRefreshing ? "animate-spin text-cyan-400" : ""}`}
+          className={`h-3 w-3 ${isRefreshing ? "animate-spin text-indigo-600" : ""}`}
         />
       </button>
 
       <button
         onClick={() => setIsPaused(!isPaused)}
         title={isPaused ? "Resume auto-refresh (10s)" : "Pause auto-refresh"}
-        className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+        className="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition-colors"
       >
         {isPaused ? <Play className="h-3 w-3" /> : <Pause className="h-3 w-3" />}
       </button>

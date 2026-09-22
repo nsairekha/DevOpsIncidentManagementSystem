@@ -25,7 +25,7 @@ export default function AppShell({ children }: AppShellProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background text-slate-100 flex">
+    <div className="min-h-screen bg-[#F6F7F9] text-slate-900 flex">
       {/* Left Sidebar */}
       <Sidebar
         systemStatus={systemStatus}
@@ -35,7 +35,7 @@ export default function AppShell({ children }: AppShellProps) {
       />
 
       {/* Main Content Area */}
-      <div className="flex-1 flex flex-col min-w-0 lg:pl-64 transition-all duration-300">
+      <div className="flex-1 flex flex-col min-w-0 lg:pl-60 transition-all duration-300">
         {/* Topbar */}
         <Topbar
           systemStatus={systemStatus}

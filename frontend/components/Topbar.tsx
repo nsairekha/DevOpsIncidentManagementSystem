@@ -1,16 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import { usePathname } from "next/navigation";
 import {
   Menu,
   Search,
   Bell,
-  CheckCircle2,
-  AlertTriangle,
   RefreshCw,
-  Server,
-  ExternalLink,
-  ChevronDown,
 } from "lucide-react";
 import StatusBadge from "./StatusBadge";
 import { Environment, SystemStatus } from "../lib/types";
@@ -34,6 +30,21 @@ export default function Topbar({
 }: TopbarProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [unreadCount, setUnreadCount] = useState(2);
+  const pathname = usePathname();
+
+  const pageTitles: Record<string, string> = {
+    "/dashboard": "Overview",
+    "/services": "Services",
+    "/metrics": "Metrics",
+    "/anomalies": "Anomalies",
+    "/rca": "Root Cause Analysis",
+    "/incidents": "Incidents",
+    "/blockchain": "Blockchain Audit",
+  };
+  const currentPage =
+    pageTitles[pathname] ||
+    pathname.split("/").filter(Boolean).pop()?.replace("-", " ") ||
+    "Overview";
 
   const notifications = [
     {
@@ -60,70 +71,74 @@ export default function Topbar({
   ];
 
   return (
-    <header className="sticky top-0 z-30 h-16 bg-[#090d16]/90 backdrop-blur-md border-b border-border/80 px-4 lg:px-6 flex items-center justify-between gap-4">
-      {/* Left: Mobile Toggle & Project Name */}
-      <div className="flex items-center gap-3">
+    <header className="sticky top-0 z-30 h-14 bg-white/80 backdrop-blur border-b border-slate-200 px-4 lg:px-6 flex items-center justify-between gap-4">
+      {/* Left: Mobile Toggle + breadcrumb title */}
+      <div className="flex items-center gap-3 min-w-0">
         <button
           onClick={onToggleSidebar}
-          className="lg:hidden p-2 rounded-md text-slate-400 hover:text-white hover:bg-slate-800 focus:outline-none"
+          className="lg:hidden p-2 -ml-2 rounded-md text-slate-500 hover:text-slate-900 hover:bg-slate-100 focus:outline-none"
           aria-label="Toggle navigation menu"
         >
           <Menu className="h-5 w-5" />
         </button>
 
-        <div className="flex items-center gap-2">
-          <h1 className="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-2">
-            <span>AI Cloud Observability</span>
-            <span className="hidden sm:inline-block text-[10px] font-mono px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-400 border border-cyan-800/60 font-medium">
-              SRE PLATFORM
-            </span>
+        <div className="flex items-center gap-2 min-w-0">
+          <span className="text-[13px] text-slate-400 hidden sm:inline">
+            Home
+          </span>
+          <span className="text-[13px] text-slate-300 hidden sm:inline">/</span>
+          <h1 className="text-[13px] font-semibold text-slate-900 capitalize truncate">
+            {currentPage}
           </h1>
         </div>
       </div>
 
       {/* Center: Search Bar */}
-      <div className="hidden md:flex flex-1 max-w-md mx-4">
+      <div className="hidden md:flex flex-1 max-w-sm mx-4">
         <div className="relative w-full">
-          <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
+          <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-400" />
           <input
             type="text"
-            placeholder="Search traces, services, metrics or incidents (Press '/' to focus)"
-            className="w-full pl-9 pr-4 py-1.5 bg-surface-subtle border border-border rounded-lg text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500/30 transition-all"
+            placeholder="Search services, incidents…"
+            className="w-full pl-9 pr-10 py-1.5 bg-slate-100/70 border border-transparent rounded-full text-[13px] text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-300 transition-all"
           />
+          <kbd className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-medium text-slate-400 bg-white border border-slate-200 rounded px-1.5 py-0.5">
+            /
+          </kbd>
         </div>
       </div>
 
       {/* Right: Environment Selector, Status, Notifications, Refresh */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-1.5">
         {/* Environment Selector */}
-        <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border">
-          <button
-            onClick={() => onEnvironmentChange("Local")}
-            className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all ${
-              environment === "Local"
-                ? "bg-cyan-950 text-cyan-300 font-semibold border border-cyan-800/60 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            Local
-          </button>
-          <button
-            onClick={() => onEnvironmentChange("AWS")}
-            className={`px-2.5 py-1 text-xs font-mono rounded-md transition-all ${
-              environment === "AWS"
-                ? "bg-indigo-950 text-indigo-300 font-semibold border border-indigo-800/60 shadow-sm"
-                : "text-slate-400 hover:text-slate-200"
-            }`}
-          >
-            AWS
-          </button>
+        <div className="flex items-center bg-slate-100 rounded-full p-0.5 border border-slate-200/70">
+          {(["Local", "AWS"] as Environment[]).map((env) => (
+            <button
+              key={env}
+              onClick={() => onEnvironmentChange(env)}
+              className={`flex items-center gap-1.5 px-3 py-1 text-xs rounded-full transition-all ${
+                environment === env
+                  ? "bg-white text-slate-900 font-medium shadow-sm"
+                  : "text-slate-500 hover:text-slate-700"
+              }`}
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  env === "Local" ? "bg-emerald-500" : "bg-amber-500"
+                }`}
+              />
+              {env}
+            </button>
+          ))}
         </div>
+
+        <div className="w-px h-5 bg-slate-200 mx-1 hidden sm:block" />
 
         {/* Current System Status Badge */}
         <div className="hidden sm:flex items-center">
           <StatusBadge
             status={systemStatus}
-            size="md"
+            size="sm"
             pulse={systemStatus !== "Operational"}
           />
         </div>
@@ -134,10 +149,10 @@ export default function Topbar({
             onClick={onRefresh}
             disabled={isRefreshing}
             title="Refresh live telemetry"
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-surface border border-transparent hover:border-border transition-all"
+            className="p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all"
           >
             <RefreshCw
-              className={`h-4 w-4 ${isRefreshing ? "animate-spin text-cyan-400" : ""}`}
+              className={`h-4 w-4 ${isRefreshing ? "animate-spin text-slate-900" : ""}`}
             />
           </button>
         )}
@@ -149,7 +164,7 @@ export default function Topbar({
               setShowNotifications(!showNotifications);
               setUnreadCount(0);
             }}
-            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-surface border border-transparent hover:border-border transition-all relative"
+            className="p-2 rounded-full text-slate-400 hover:text-slate-900 hover:bg-slate-100 transition-all relative"
             aria-label="View system notifications"
           >
             <Bell className="h-4 w-4" />
@@ -163,28 +178,28 @@ export default function Topbar({
 
           {/* Notifications Dropdown */}
           {showNotifications && (
-            <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-lg bg-surface border border-border shadow-2xl p-4 z-50 animate-in fade-in-50 duration-150">
-              <div className="flex items-center justify-between pb-3 border-b border-border">
-                <h4 className="text-xs font-semibold text-white uppercase tracking-wider font-mono">
-                  Operational Alerts
+            <div className="absolute right-0 mt-2 w-80 sm:w-96 rounded-xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50 p-2 z-50">
+              <div className="flex items-center justify-between px-3 py-2">
+                <h4 className="text-[13px] font-semibold text-slate-900">
+                  Notifications
                 </h4>
-                <span className="text-[10px] font-mono text-cyan-400">
-                  3 active notifications
+                <span className="text-[11px] text-slate-400">
+                  3 new
                 </span>
               </div>
 
-              <div className="divide-y divide-border/60 max-h-72 overflow-y-auto my-2">
+              <div className="divide-y divide-slate-100 max-h-72 overflow-y-auto">
                 {notifications.map((n) => (
-                  <div key={n.id} className="py-2.5 space-y-1 hover:bg-surface-subtle/50 px-1 rounded transition-colors">
+                  <div key={n.id} className="py-2.5 px-3 space-y-1 hover:bg-slate-50 rounded-lg transition-colors">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-medium text-slate-200">
+                      <span className="text-xs font-medium text-slate-900">
                         {n.title}
                       </span>
-                      <span className="text-[10px] font-mono text-slate-400">
+                      <span className="text-[10px] text-slate-500">
                         {n.time}
                       </span>
                     </div>
-                    <p className="text-[11px] text-slate-400 leading-snug">
+                    <p className="text-[11px] text-slate-500 leading-snug">
                       {n.message}
                     </p>
                     <div className="pt-0.5">
@@ -194,13 +209,13 @@ export default function Topbar({
                 ))}
               </div>
 
-              <div className="pt-2 border-t border-border flex justify-between items-center text-[11px] font-mono">
-                <span className="text-slate-400">Automated AI alerts</span>
+              <div className="px-3 py-2 border-t border-slate-100 flex justify-between items-center">
+                <span className="text-[11px] text-slate-400">Auto-refresh every 15s</span>
                 <button
                   onClick={() => setShowNotifications(false)}
-                  className="text-cyan-400 hover:underline"
+                  className="text-[12px] font-medium text-slate-900 hover:underline"
                 >
-                  Close
+                  View all
                 </button>
               </div>
             </div>

@@ -28,7 +28,7 @@ export default function StatusBadge({
 }: StatusBadgeProps) {
   const normalized = status.toLowerCase();
 
-  let colorClasses = "bg-slate-800 text-slate-300 border-slate-700";
+  let colorClasses = "bg-slate-100 text-slate-600 border-slate-200";
   let dotColor = "bg-slate-400";
 
   if (
@@ -36,32 +36,32 @@ export default function StatusBadge({
       normalized
     )
   ) {
-    colorClasses = "bg-emerald-950/60 text-emerald-400 border-emerald-800/60";
-    dotColor = "bg-emerald-400";
+    colorClasses = "bg-emerald-50 text-emerald-700 border-emerald-200";
+    dotColor = "bg-emerald-500";
   } else if (
     ["degraded", "investigating", "warning", "medium"].includes(normalized)
   ) {
-    colorClasses = "bg-amber-950/60 text-amber-400 border-amber-800/60";
-    dotColor = "bg-amber-400";
+    colorClasses = "bg-amber-50 text-amber-700 border-amber-200";
+    dotColor = "bg-amber-500";
   } else if (
     ["down", "critical", "disconnected", "high", "active"].includes(normalized)
   ) {
-    colorClasses = "bg-rose-950/60 text-rose-400 border-rose-800/60";
-    dotColor = "bg-rose-400";
+    colorClasses = "bg-rose-50 text-rose-700 border-rose-200";
+    dotColor = "bg-rose-500";
   } else if (["disabled"].includes(normalized)) {
-    colorClasses = "bg-zinc-800/80 text-zinc-400 border-zinc-700";
-    dotColor = "bg-zinc-500";
+    colorClasses = "bg-slate-100 text-slate-500 border-slate-200";
+    dotColor = "bg-slate-400";
   }
 
   const sizeClasses = {
     sm: "text-[11px] px-2 py-0.5 gap-1.5",
     md: "text-xs px-2.5 py-1 gap-1.5",
-    lg: "text-sm px-3 py-1.5 gap-2 font-medium",
+    lg: "text-sm px-3 py-1.5 gap-2",
   }[size];
 
   return (
     <span
-      className={`inline-flex items-center rounded-full font-mono border font-medium uppercase tracking-wider ${colorClasses} ${sizeClasses}`}
+      className={`inline-flex items-center rounded-full border font-medium ${colorClasses} ${sizeClasses}`}
     >
       <span className="relative flex h-2 w-2">
         {pulse && (

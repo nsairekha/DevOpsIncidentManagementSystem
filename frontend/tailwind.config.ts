@@ -10,23 +10,30 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#080c14",
+        background: "#F6F7F9",
         surface: {
-          DEFAULT: "#0f1623",
-          hover: "#152033",
-          active: "#1b2942",
-          subtle: "#0b101a",
+          DEFAULT: "#FFFFFF",
+          hover: "#F9FAFB",
+          active: "#F3F4F6",
+          subtle: "#F9FAFB",
         },
         border: {
-          DEFAULT: "#1e293b",
-          subtle: "#162030",
-          bright: "#334155",
+          DEFAULT: "#E5E7EB",
+          subtle: "#F1F5F9",
+          bright: "#D1D5DB",
+        },
+        primary: {
+          DEFAULT: "#4F46E5",
+          50: "#EEF2FF",
+          100: "#E0E7FF",
+          600: "#4F46E5",
+          700: "#4338CA",
         },
         status: {
-          healthy: "#10b981",
-          degraded: "#f59e0b",
-          critical: "#ef4444",
-          info: "#38bdf8",
+          healthy: "#059669",
+          degraded: "#D97706",
+          critical: "#DC2626",
+          info: "#2563EB",
         },
       },
       fontFamily: {

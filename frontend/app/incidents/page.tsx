@@ -83,24 +83,24 @@ export default function IncidentsPage() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             {isLive && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             )}
             <span
               className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                isLive ? "bg-emerald-400" : "bg-amber-400"
+                isLive ? "bg-emerald-500" : "bg-amber-500"
               }`}
             />
           </span>
-          <div className="text-xs font-mono">
-            <span className="font-bold text-white uppercase tracking-wide">
-              {isLive ? "LIVE INCIDENTS REGISTRY" : "DEMO DATA (Backend Offline)"}
+          <div className="text-xs">
+            <span className="font-semibold text-slate-900">
+              {isLive ? "Live incidents registry" : "Demo data (backend offline)"}
             </span>
-            <span className="text-slate-400 ml-2">
-              Endpoint: <code>{API_BASE_URL}/api/incidents</code>
+            <span className="text-slate-500 ml-2">
+              Endpoint: <code className="bg-slate-100 text-slate-600 rounded px-1 font-mono">{API_BASE_URL}/api/incidents</code>
             </span>
           </div>
         </div>
@@ -115,96 +115,96 @@ export default function IncidentsPage() {
 
       {/* Title */}
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight">
+        <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
           Incident Response & Triage
         </h2>
-        <p className="text-xs font-mono text-slate-400">
+        <p className="text-sm text-slate-500">
           Tracking active microservice anomalies, blast radius, and root-cause resolution
         </p>
       </div>
 
       {/* Summary KPI Cards: Active vs Resolved */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div
           onClick={() => setActiveTab("ACTIVE")}
-          className={`rounded-lg bg-surface border p-4 flex items-center justify-between cursor-pointer transition-all ${
+          className={`rounded-xl bg-white border shadow-sm p-4 flex items-center justify-between cursor-pointer transition-all ${
             activeTab === "ACTIVE"
-              ? "border-rose-500 ring-1 ring-rose-500"
-              : "border-rose-900/70 hover:border-rose-700"
-          } shadow-[0_0_15px_-3px_rgba(239,68,68,0.15)]`}
+              ? "border-rose-300 ring-2 ring-rose-100"
+              : "border-slate-200 hover:border-rose-200"
+          }`}
         >
           <div>
-            <span className="text-[10px] uppercase text-slate-400 block font-semibold">
-              ACTIVE INCIDENTS
+            <span className="text-xs text-slate-500 block font-medium">
+              Active incidents
             </span>
-            <span className="text-3xl font-bold text-rose-400 mt-1 block">
+            <span className="text-3xl font-semibold text-rose-600 mt-1 block">
               {activeIncidents.length}
             </span>
-            <span className="text-[11px] text-slate-400 mt-1 block">
+            <span className="text-xs text-slate-500 mt-1 block">
               Requires immediate mitigation
             </span>
           </div>
-          <div className="p-3 rounded-lg bg-rose-950 text-rose-400 border border-rose-800">
+          <div className="p-3 rounded-lg bg-rose-50 text-rose-600 border border-rose-100">
             <AlertOctagon className="h-6 w-6" />
           </div>
         </div>
 
         <div
           onClick={() => setActiveTab("RESOLVED")}
-          className={`rounded-lg bg-surface border p-4 flex items-center justify-between cursor-pointer transition-all ${
+          className={`rounded-xl bg-white border shadow-sm p-4 flex items-center justify-between cursor-pointer transition-all ${
             activeTab === "RESOLVED"
-              ? "border-emerald-500 ring-1 ring-emerald-500"
-              : "border-emerald-900/70 hover:border-emerald-700"
+              ? "border-emerald-300 ring-2 ring-emerald-100"
+              : "border-slate-200 hover:border-emerald-200"
           }`}
         >
           <div>
-            <span className="text-[10px] uppercase text-slate-400 block font-semibold">
-              RESOLVED INCIDENTS
+            <span className="text-xs text-slate-500 block font-medium">
+              Resolved incidents
             </span>
-            <span className="text-3xl font-bold text-emerald-400 mt-1 block">
+            <span className="text-3xl font-semibold text-emerald-600 mt-1 block">
               {resolvedIncidents.length}
             </span>
-            <span className="text-[11px] text-slate-400 mt-1 block">
+            <span className="text-xs text-slate-500 mt-1 block">
               Mitigated in trailing window
             </span>
           </div>
-          <div className="p-3 rounded-lg bg-emerald-950 text-emerald-400 border border-emerald-800">
+          <div className="p-3 rounded-lg bg-emerald-50 text-emerald-600 border border-emerald-100">
             <CheckCircle className="h-6 w-6" />
           </div>
         </div>
       </div>
 
       {/* Filter Tabs & Search Controls */}
-      <div className="rounded-lg bg-surface border border-border p-5 space-y-4">
+      <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           {/* Tabs */}
-          <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border">
+          <div className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200">
             <button
               onClick={() => setActiveTab("ALL")}
-              className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all ${
+              className={`px-3 py-1.5 text-xs rounded-md transition-all ${
                 activeTab === "ALL"
-                  ? "bg-slate-800 text-white font-semibold"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-white shadow-sm text-slate-900 font-medium"
+                  : "text-slate-500 hover:text-slate-900"
               }`}
             >
               All Incidents ({incidents.length})
             </button>
             <button
               onClick={() => setActiveTab("ACTIVE")}
-              className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all ${
+              className={`px-3 py-1.5 text-xs rounded-md transition-all ${
                 activeTab === "ACTIVE"
-                  ? "bg-rose-950 text-rose-300 font-semibold border border-rose-800/60"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-white shadow-sm text-slate-900 font-medium"
+                  : "text-slate-500 hover:text-slate-900"
               }`}
             >
               Active ({activeIncidents.length})
             </button>
             <button
               onClick={() => setActiveTab("RESOLVED")}
-              className={`px-3 py-1.5 text-xs font-mono rounded-md transition-all ${
+              className={`px-3 py-1.5 text-xs rounded-md transition-all ${
                 activeTab === "RESOLVED"
-                  ? "bg-emerald-950 text-emerald-300 font-semibold border border-emerald-800/60"
-                  : "text-slate-400 hover:text-slate-200"
+                  ? "bg-white shadow-sm text-slate-900 font-medium"
+                  : "text-slate-500 hover:text-slate-900"
               }`}
             >
               Resolved ({resolvedIncidents.length})
@@ -220,14 +220,14 @@ export default function IncidentsPage() {
                 placeholder="Filter by ID or service..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-8 pr-3 py-1.5 bg-surface-subtle border border-border rounded text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 w-44"
+                className="pl-8 pr-3 py-1.5 bg-white border border-slate-300 rounded text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 w-44"
               />
             </div>
 
             <select
               value={severityFilter}
               onChange={(e) => setSeverityFilter(e.target.value)}
-              className="bg-surface-subtle border border-border rounded px-2.5 py-1.5 text-xs font-mono text-slate-300 focus:outline-none focus:border-cyan-500"
+              className="bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             >
               <option value="ALL">All Severities</option>
               <option value="CRITICAL">Critical</option>
@@ -239,10 +239,10 @@ export default function IncidentsPage() {
         </div>
 
         {/* Table of Incidents */}
-        <div className="overflow-x-auto border border-border/80 rounded-md bg-surface-subtle">
+        <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white">
           <table className="w-full text-left text-xs border-collapse min-w-[700px]">
             <thead>
-              <tr className="border-b border-border bg-slate-900/60 font-mono text-[11px] text-slate-400">
+              <tr className="border-b border-slate-200 bg-slate-50 text-[11px] text-slate-500">
                 <th className="py-2.5 px-3 font-semibold">Incident ID</th>
                 <th className="py-2.5 px-3 font-semibold">Severity</th>
                 <th className="py-2.5 px-3 font-semibold">Service</th>
@@ -253,14 +253,14 @@ export default function IncidentsPage() {
                 <th className="py-2.5 px-3 text-right">Details</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/50 font-mono">
+            <tbody className="divide-y divide-slate-100">
               {filtered.map((inc) => (
                 <tr
                   key={inc.id}
                   onClick={() => setSelectedIncident(inc)}
-                  className="hover:bg-surface-hover/70 transition-colors cursor-pointer group"
+                  className="hover:bg-slate-50 transition-colors cursor-pointer group"
                 >
-                  <td className="py-3 px-3 font-bold text-cyan-400">
+                  <td className="py-3 px-3 font-semibold text-indigo-600 font-mono">
                     {inc.id}
                   </td>
 
@@ -268,19 +268,19 @@ export default function IncidentsPage() {
                     <StatusBadge status={inc.severity} size="sm" />
                   </td>
 
-                  <td className="py-3 px-3 text-slate-200 font-medium">
+                  <td className="py-3 px-3 text-slate-900 font-medium">
                     {inc.service}
                   </td>
 
-                  <td className="py-3 px-3 font-sans text-white group-hover:text-cyan-300">
+                  <td className="py-3 px-3 text-slate-900 group-hover:text-indigo-700">
                     {inc.incident}
                   </td>
 
-                  <td className="py-3 px-3 text-slate-400 text-[11px]">
+                  <td className="py-3 px-3 text-slate-500 text-[11px] font-mono">
                     {inc.detectedTime}
                   </td>
 
-                  <td className="py-3 px-3 text-slate-300 text-[11px]">
+                  <td className="py-3 px-3 text-slate-600 text-[11px]">
                     {inc.duration}
                   </td>
 
@@ -293,7 +293,7 @@ export default function IncidentsPage() {
                   </td>
 
                   <td className="py-3 px-3 text-right">
-                    <span className="inline-flex p-1 text-slate-400 group-hover:text-cyan-400">
+                    <span className="inline-flex p-1 text-slate-400 group-hover:text-indigo-600">
                       <ChevronRight className="h-4 w-4" />
                     </span>
                   </td>
@@ -317,54 +317,54 @@ export default function IncidentsPage() {
           - audit status */}
       {selectedIncident && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-xl rounded-xl bg-surface border border-border shadow-2xl p-6 space-y-4 font-mono text-xs animate-in fade-in-50 zoom-in-95 duration-150">
+          <div className="w-full max-w-xl rounded-xl bg-white border border-slate-200 shadow-xl p-6 space-y-4 text-xs animate-in fade-in-50 zoom-in-95 duration-150">
             {/* Modal Header */}
-            <div className="flex items-start justify-between border-b border-border/80 pb-3">
+            <div className="flex items-start justify-between border-b border-slate-100 pb-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-cyan-400 font-bold text-sm">
+                  <span className="text-indigo-600 font-semibold text-sm font-mono">
                     {selectedIncident.id}
                   </span>
                   <StatusBadge status={selectedIncident.severity} size="sm" />
                   <StatusBadge status={selectedIncident.status} size="sm" />
                 </div>
-                <h3 className="text-base font-bold text-white font-sans">
+                <h3 className="text-base font-semibold text-slate-900">
                   {selectedIncident.incident}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedIncident(null)}
-                className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
             {/* Structured Details Grid */}
-            <div className="grid grid-cols-2 gap-3 p-3.5 rounded-lg bg-surface-subtle border border-border/60">
+            <div className="grid grid-cols-2 gap-3 p-3.5 rounded-lg bg-slate-50 border border-slate-200">
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
+                <span className="text-[11px] text-slate-500 block">
                   Service
                 </span>
-                <span className="text-white font-bold">{selectedIncident.service}</span>
+                <span className="text-slate-900 font-semibold">{selectedIncident.service}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
-                  Detected Time
+                <span className="text-[11px] text-slate-500 block">
+                  Detected time
                 </span>
-                <span className="text-slate-300">{selectedIncident.detectedTime}</span>
+                <span className="text-slate-600 font-mono">{selectedIncident.detectedTime}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
+                <span className="text-[11px] text-slate-500 block">
                   Duration
                 </span>
-                <span className="text-slate-300">{selectedIncident.duration}</span>
+                <span className="text-slate-600">{selectedIncident.duration}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
-                  Audit Status
+                <span className="text-[11px] text-slate-500 block">
+                  Audit status
                 </span>
-                <span className="text-cyan-400 font-semibold">
+                <span className="text-indigo-600 font-medium">
                   {selectedIncident.auditStatus}
                 </span>
               </div>
@@ -372,38 +372,38 @@ export default function IncidentsPage() {
 
             {/* Anomaly */}
             <div>
-              <span className="text-slate-400 font-semibold block mb-1 uppercase text-[10px]">
-                Triggering Anomaly:
+              <span className="text-slate-600 font-medium block mb-1 text-[11px]">
+                Triggering anomaly:
               </span>
-              <p className="text-rose-300 font-sans p-2.5 rounded bg-rose-950/20 border border-rose-800/40">
+              <p className="text-rose-700 p-2.5 rounded bg-rose-50 border border-rose-200">
                 {selectedIncident.anomaly}
               </p>
             </div>
 
             {/* Root Cause */}
             <div>
-              <span className="text-slate-400 font-semibold block mb-1 uppercase text-[10px]">
-                Root Cause:
+              <span className="text-slate-600 font-medium block mb-1 text-[11px]">
+                Root cause:
               </span>
-              <p className="text-amber-300/90 font-sans p-2.5 rounded bg-amber-950/20 border border-amber-800/40 leading-relaxed">
+              <p className="text-amber-700 p-2.5 rounded bg-amber-50 border border-amber-200 leading-relaxed">
                 {selectedIncident.rootCause}
               </p>
             </div>
 
             {/* Resolution */}
             <div>
-              <span className="text-slate-400 font-semibold block mb-1 uppercase text-[10px]">
-                Resolution / Playbook:
+              <span className="text-slate-600 font-medium block mb-1 text-[11px]">
+                Resolution / playbook:
               </span>
-              <p className="text-emerald-300 font-sans p-2.5 rounded bg-emerald-950/20 border border-emerald-800/40 leading-relaxed">
+              <p className="text-emerald-700 p-2.5 rounded bg-emerald-50 border border-emerald-200 leading-relaxed">
                 {selectedIncident.resolution}
               </p>
             </div>
 
-            <div className="pt-3 border-t border-border flex justify-end">
+            <div className="pt-3 border-t border-slate-200 flex justify-end">
               <button
                 onClick={() => setSelectedIncident(null)}
-                className="px-4 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700"
+                className="px-4 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700"
               >
                 Close Details
               </button>

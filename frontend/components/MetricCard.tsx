@@ -24,51 +24,51 @@ export default function MetricCard({
   status = "normal",
   icon,
 }: MetricCardProps) {
-  // Border and accent based on status
-  let statusBorder = "border-border hover:border-slate-700";
-  let statusGlow = "";
-
+  // Border based on status
+  let statusBorder = "border-slate-200";
   if (status === "warning") {
-    statusBorder = "border-amber-800/60 hover:border-amber-700/80";
-    statusGlow = "shadow-[0_0_15px_-3px_rgba(245,158,11,0.15)]";
+    statusBorder = "border-amber-300";
   } else if (status === "critical") {
-    statusBorder = "border-rose-800/70 hover:border-rose-700";
-    statusGlow = "shadow-[0_0_15px_-3px_rgba(239,68,68,0.2)]";
+    statusBorder = "border-rose-300";
   }
 
   // Trend color
   let trendColor = "text-slate-400";
   if (trend === "up") {
-    trendColor = trendGood ? "text-emerald-400" : "text-rose-400";
+    trendColor = trendGood ? "text-emerald-600" : "text-rose-600";
   } else if (trend === "down") {
-    trendColor = trendGood ? "text-rose-400" : "text-emerald-400";
+    trendColor = trendGood ? "text-rose-600" : "text-emerald-600";
   }
 
   return (
     <div
-      className={`rounded-lg bg-surface p-4 border transition-all duration-200 ${statusBorder} ${statusGlow} flex flex-col justify-between`}
+      className={`rounded-xl bg-white p-5 border ${statusBorder} shadow-sm hover:shadow transition flex flex-col justify-between`}
     >
       <div className="flex items-center justify-between gap-2 mb-2">
-        <span className="text-xs font-medium text-slate-400 uppercase tracking-wider">
+        <span className="text-[13px] font-medium text-slate-500">
           {title}
         </span>
-        {icon && <span className="text-slate-500">{icon}</span>}
+        {icon && (
+          <span className="p-2 rounded-lg bg-slate-100 text-slate-500">
+            {icon}
+          </span>
+        )}
       </div>
 
       <div className="flex items-baseline gap-1.5 my-1">
-        <span className="text-2xl font-bold font-mono tracking-tight text-white">
+        <span className="text-2xl font-semibold tracking-tight text-slate-900">
           {value}
         </span>
         {unit && (
-          <span className="text-xs font-mono text-slate-400 uppercase font-medium">
+          <span className="text-sm text-slate-400 font-medium">
             {unit}
           </span>
         )}
       </div>
 
-      <div className="mt-2 pt-2 border-t border-border/40 flex items-center justify-between text-xs">
+      <div className="mt-2 pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
         {change ? (
-          <div className={`flex items-center gap-1 font-mono font-medium ${trendColor}`}>
+          <div className={`flex items-center gap-1 font-medium ${trendColor}`}>
             {trend === "up" && <ArrowUpRight className="h-3.5 w-3.5" />}
             {trend === "down" && <ArrowDownRight className="h-3.5 w-3.5" />}
             {trend === "neutral" && <Minus className="h-3.5 w-3.5" />}
@@ -79,7 +79,7 @@ export default function MetricCard({
         )}
 
         {description && (
-          <span className="text-[11px] text-slate-400 font-mono">
+          <span className="text-[11px] text-slate-500">
             {description}
           </span>
         )}

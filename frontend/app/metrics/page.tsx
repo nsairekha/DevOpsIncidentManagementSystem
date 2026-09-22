@@ -36,8 +36,7 @@ export default function MetricsPage() {
   const [allowFallback, setAllowFallback] = useState(true);
   const [backendMessage, setBackendMessage] = useState<string | null>(null);
 
-  const [selectedService, setSelectedService] = useState("all");
-  const [selectedMetric, setSelectedMetric] = useState("Latency");
+  const [selectedService, setSelectedService] = useState("all");  const [selectedMetric, setSelectedMetric] = useState("Latency");
   const [timeRange, setTimeRange] = useState("15m");
 
   const [liveBaselines, setLiveBaselines] = useState<RawBaselineRecord[]>([]);
@@ -123,24 +122,24 @@ export default function MetricsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             {isLive && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             )}
             <span
               className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                isLive ? "bg-emerald-400" : "bg-amber-400"
+                isLive ? "bg-emerald-500" : "bg-amber-500"
               }`}
             />
           </span>
-          <div className="text-xs font-mono">
-            <span className="font-bold text-white uppercase tracking-wide">
-              {isLive ? "LIVE METRIC REPOSITORY" : "DEMO BASELINES (Backend Offline)"}
+          <div className="text-xs">
+            <span className="font-semibold text-slate-900">
+              {isLive ? "Live metric repository" : "Demo baselines (backend offline)"}
             </span>
-            <span className="text-slate-400 ml-2">
-              Endpoint: <code>{API_BASE_URL}/api/v1/baselines</code>
+            <span className="text-slate-500 ml-2">
+              Endpoint: <code className="bg-slate-100 text-slate-600 rounded px-1">{API_BASE_URL}/api/v1/baselines</code>
             </span>
           </div>
         </div>
@@ -155,7 +154,7 @@ export default function MetricsPage() {
           {!isLive && (
             <button
               onClick={() => setAllowFallback(!allowFallback)}
-              className="text-[11px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
+              className="text-[11px] px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition-colors"
             >
               {allowFallback ? "Hide Demo Data" : "Show Demo Data"}
             </button>
@@ -164,35 +163,35 @@ export default function MetricsPage() {
       </div>
 
       {backendMessage && (
-        <div className="p-3 rounded-lg bg-surface-subtle border border-border flex items-center gap-2 text-xs font-mono text-slate-300">
-          <Info className="h-4 w-4 text-cyan-400 shrink-0" />
+        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center gap-2 text-xs text-slate-600">
+          <Info className="h-4 w-4 text-indigo-600 shrink-0" />
           <span>
             Backend status: <strong>{backendMessage}</strong>
           </span>
         </div>
       )}
 
-      <div className="rounded-lg bg-surface border border-border p-5 space-y-4">
+      <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
-            <h3 className="text-sm font-semibold text-white tracking-tight">
+            <h3 className="text-sm font-semibold text-slate-900 tracking-tight">
               Metrics & Statistical Baseline Explorer
             </h3>
-            <p className="text-[11px] font-mono text-slate-400">
+            <p className="text-xs text-slate-500">
               Correlate live telemetry with dynamic statistical lower & upper bounds
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-mono">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
           <div>
-            <label className="block text-slate-400 uppercase text-[10px] mb-1 font-semibold">
-              Filter by Service
+            <label className="block text-slate-600 font-medium mb-1">
+              Filter by service
             </label>
             <select
               value={selectedService}
               onChange={(e) => setSelectedService(e.target.value)}
-              className="w-full bg-surface-subtle border border-border rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             >
               <option value="all">All Services (Cluster-wide)</option>
               <option value="user-service">User Service</option>
@@ -203,13 +202,13 @@ export default function MetricsPage() {
           </div>
 
           <div>
-            <label className="block text-slate-400 uppercase text-[10px] mb-1 font-semibold">
-              Select Metric Signal
+            <label className="block text-slate-600 font-medium mb-1">
+              Select metric signal
             </label>
             <select
               value={selectedMetric}
               onChange={(e) => setSelectedMetric(e.target.value)}
-              className="w-full bg-surface-subtle border border-border rounded-lg px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+              className="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             >
               {metricOptions.map((opt) => (
                 <option key={opt} value={opt}>
@@ -220,18 +219,18 @@ export default function MetricsPage() {
           </div>
 
           <div>
-            <label className="block text-slate-400 uppercase text-[10px] mb-1 font-semibold">
-              Time Range Window
+            <label className="block text-slate-600 font-medium mb-1">
+              Time range
             </label>
-            <div className="flex items-center bg-surface-subtle p-1 rounded-lg border border-border">
+            <div className="flex items-center bg-slate-100 p-1 rounded-lg border border-slate-200">
               {["15m", "1h", "6h", "24h"].map((range) => (
                 <button
                   key={range}
                   onClick={() => setTimeRange(range)}
-                  className={`flex-1 py-1 text-xs font-mono rounded-md transition-all ${
+                  className={`flex-1 py-1 text-xs rounded-md transition-all ${
                     timeRange === range
-                      ? "bg-cyan-950 text-cyan-300 font-semibold border border-cyan-800/60 shadow-sm"
-                      : "text-slate-400 hover:text-slate-200"
+                      ? "bg-white shadow-sm text-slate-900 font-medium"
+                      : "text-slate-500 hover:text-slate-900"
                   }`}
                 >
                   {range}
@@ -243,45 +242,45 @@ export default function MetricsPage() {
       </div>
 
       {!currentBaseline ? (
-        <div className="rounded-lg bg-surface border border-border p-8 text-center text-sm font-mono text-slate-400">
+        <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-8 text-center text-sm text-slate-500">
           No baseline data available for the selected metric.{" "}
           {isLive ? "Prometheus may be unreachable." : "Enable demo data or connect the backend."}
         </div>
       ) : (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 font-mono">
-            <div className="rounded-lg bg-surface border border-cyan-800/60 p-5 space-y-4 shadow-[0_0_15px_-3px_rgba(6,182,212,0.15)]">
-              <div className="flex items-center justify-between border-b border-border/80 pb-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div>
-                  <span className="text-[10px] uppercase text-cyan-400 font-bold tracking-wider">
-                    CURRENT LIVE METRIC
+                  <span className="text-xs text-slate-500 font-medium">
+                    Current live metric
                   </span>
-                  <h4 className="text-base font-bold text-white mt-0.5">
+                  <h4 className="text-base font-semibold text-slate-900 mt-0.5">
                     {selectedMetric} ({selectedService})
                   </h4>
                 </div>
-                <span className="px-2.5 py-1 rounded bg-cyan-950 text-cyan-300 border border-cyan-800/60 text-xs font-bold">
-                  OBSERVED
+                <span className="px-2.5 py-1 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-medium">
+                  Observed
                 </span>
               </div>
 
               <div className="flex items-baseline gap-2">
-                <span className="text-3xl font-bold text-white">
+                <span className="text-3xl font-semibold text-slate-900">
                   {Number((currentBaseline as AnyBaseline).current_value).toFixed(2)}
                 </span>
-                <span className="text-sm text-slate-400">{unit || "units"}</span>
+                <span className="text-sm text-slate-500">{unit || "units"}</span>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border/60 text-xs">
-                <div className="p-2.5 rounded bg-surface-subtle border border-border/60">
-                  <span className="text-[10px] text-slate-400 uppercase block">
-                    Deviation from Baseline
+              <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-100 text-xs">
+                <div className="p-2.5 rounded bg-slate-50 border border-slate-200">
+                  <span className="text-[11px] text-slate-500 block">
+                    Deviation from baseline
                   </span>
                   <div
-                    className={`text-sm font-bold flex items-center gap-1 ${
+                    className={`text-sm font-semibold flex items-center gap-1 ${
                       currentBaseline.deviation_percentage > 50
-                        ? "text-rose-400"
-                        : "text-emerald-400"
+                        ? "text-rose-600"
+                        : "text-emerald-600"
                     }`}
                   >
                     {currentBaseline.deviation_percentage > 0 ? (
@@ -296,11 +295,11 @@ export default function MetricsPage() {
                   </div>
                 </div>
 
-                <div className="p-2.5 rounded bg-surface-subtle border border-border/60">
-                  <span className="text-[10px] text-slate-400 uppercase block">
-                    Deviation Absolute
+                <div className="p-2.5 rounded bg-slate-50 border border-slate-200">
+                  <span className="text-[11px] text-slate-500 block">
+                    Deviation absolute
                   </span>
-                  <span className="text-sm font-bold text-slate-200">
+                  <span className="text-sm font-semibold text-slate-900">
                     {currentBaseline.deviation_from_mean >= 0 ? "+" : ""}
                     {currentBaseline.deviation_from_mean.toFixed(2)} {unit}
                   </span>
@@ -308,38 +307,38 @@ export default function MetricsPage() {
               </div>
             </div>
 
-            <div className="rounded-lg bg-surface border border-border p-5 space-y-4">
-              <div className="flex items-center justify-between border-b border-border/80 pb-3">
+            <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                 <div>
-                  <span className="text-[10px] uppercase text-indigo-400 font-bold tracking-wider">
-                    STATISTICAL BASELINE (NORMAL BOUNDS)
+                  <span className="text-xs text-slate-500 font-medium">
+                    Statistical baseline (normal bounds)
                   </span>
-                  <h4 className="text-base font-bold text-white mt-0.5">
-                    Training Reference Distribution
+                  <h4 className="text-base font-semibold text-slate-900 mt-0.5">
+                    Training reference distribution
                   </h4>
                 </div>
-                <span className="px-2.5 py-1 rounded bg-indigo-950 text-indigo-300 border border-indigo-800/60 text-xs font-bold">
-                  EXPECTED
+                <span className="px-2.5 py-1 rounded bg-slate-100 text-slate-600 border border-slate-200 text-xs font-medium">
+                  Expected
                 </span>
               </div>
 
               <div className="grid grid-cols-3 gap-2.5 text-xs">
                 {[
-                  ["Mean", currentBaseline.mean, "text-slate-200"],
-                  ["P50 (Median)", currentBaseline.p50, "text-slate-200"],
-                  ["P95", currentBaseline.p95, "text-amber-400"],
-                  ["P99", currentBaseline.p99, "text-rose-400"],
-                  ["Lower Bound", currentBaseline.normal_lower_bound, "text-emerald-400"],
-                  ["Upper Bound", currentBaseline.normal_upper_bound, "text-amber-400"],
+                  ["Mean", currentBaseline.mean, "text-slate-900"],
+                  ["P50 (Median)", currentBaseline.p50, "text-slate-900"],
+                  ["P95", currentBaseline.p95, "text-amber-700"],
+                  ["P99", currentBaseline.p99, "text-rose-600"],
+                  ["Lower Bound", currentBaseline.normal_lower_bound, "text-emerald-600"],
+                  ["Upper Bound", currentBaseline.normal_upper_bound, "text-amber-700"],
                 ].map(([label, value, color]) => (
                   <div
                     key={label as string}
-                    className="p-2 rounded bg-surface-subtle border border-border/60"
+                    className="p-2 rounded bg-slate-50 border border-slate-200"
                   >
-                    <span className="text-[10px] text-slate-400 uppercase block">
+                    <span className="text-[11px] text-slate-500 block">
                       {label}
                     </span>
-                    <span className={`text-sm font-bold ${color}`}>
+                    <span className={`text-sm font-semibold ${color}`}>
                       {Number(value).toFixed(2)}
                     </span>
                   </div>
@@ -348,7 +347,7 @@ export default function MetricsPage() {
             </div>
           </div>
 
-          <div className="rounded-lg bg-surface border border-border p-5">
+          <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5">
             <MetricChart
               title={`${selectedMetric} Time-Series vs Statistical Upper Bound`}
               subtitle={
@@ -364,13 +363,13 @@ export default function MetricsPage() {
                 {
                   key: "p95Latency",
                   name: "Observed " + selectedMetric,
-                  color: "#06b6d4",
+                  color: "#4F46E5",
                   strokeWidth: 2,
                 },
                 {
                   key: "p99Latency",
                   name: "P99 Spike",
-                  color: "#ef4444",
+                  color: "#DC2626",
                   strokeWidth: 2,
                   strokeDasharray: "4 2",
                 },

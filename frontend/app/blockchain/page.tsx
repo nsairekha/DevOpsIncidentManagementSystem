@@ -113,24 +113,24 @@ export default function BlockchainAuditPage() {
   return (
     <div className="space-y-6">
       {/* Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             {isLive && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             )}
             <span
               className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                isLive ? "bg-emerald-400" : "bg-slate-500"
+                isLive ? "bg-emerald-500" : "bg-amber-500"
               }`}
             />
           </span>
-          <div className="text-xs font-mono">
-            <span className="font-bold text-white uppercase tracking-wide">
-              {isLive ? "LIVE BLOCKCHAIN INTEGRATION" : "BLOCKCHAIN INTEGRATION OFFLINE"}
+          <div className="text-xs">
+            <span className="font-semibold text-slate-900">
+              {isLive ? "Live blockchain integration" : "Blockchain integration offline"}
             </span>
-            <span className="text-slate-400 ml-2">
-              Endpoint: <code>{API_BASE_URL}/api/audit</code>
+            <span className="text-slate-500 ml-2">
+              Endpoint: <code className="bg-slate-100 text-slate-600 rounded px-1 font-mono">{API_BASE_URL}/api/audit</code>
             </span>
           </div>
         </div>
@@ -148,10 +148,10 @@ export default function BlockchainAuditPage() {
       {/* Page Title & Verify Record Button */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight">
+          <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
             Blockchain Audit Trail & Proof-of-Telemetry
           </h2>
-          <p className="text-xs font-mono text-slate-400">
+          <p className="text-sm text-slate-500">
             Append-only verifiable cryptographic ledger securing incident detections and automated remediation
           </p>
         </div>
@@ -160,10 +160,10 @@ export default function BlockchainAuditPage() {
         <button
           onClick={handleVerifyRecord}
           disabled={verifying}
-          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-xs font-bold transition-all shadow-lg shadow-cyan-950/40 disabled:opacity-60 self-start sm:self-auto"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-medium transition-all shadow-sm disabled:opacity-60 self-start sm:self-auto"
         >
           <Fingerprint
-            className={`h-4 w-4 ${verifying ? "animate-spin text-cyan-200" : ""}`}
+            className={`h-4 w-4 ${verifying ? "animate-spin" : ""}`}
           />
           <span>{verifying ? "Verifying Proofs..." : "Verify Record"}</span>
         </button>
@@ -172,44 +172,44 @@ export default function BlockchainAuditPage() {
       {/* Verification Result Toast/Banner */}
       {verifyResult && (
         <div
-          className={`p-4 rounded-lg border font-mono text-xs flex items-center justify-between animate-in fade-in-50 duration-200 ${
+          className={`p-4 rounded-xl border text-xs flex items-center justify-between shadow-sm ${
             verifyResult.valid
-              ? "bg-emerald-950/40 border-emerald-800 text-emerald-300"
-              : "bg-rose-950/40 border-rose-800 text-rose-300"
+              ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+              : "bg-rose-50 border-rose-200 text-rose-700"
           }`}
         >
           <div className="flex items-center gap-2.5">
             {verifyResult.valid ? (
-              <ShieldCheck className="h-5 w-5 text-emerald-400 shrink-0" />
+              <ShieldCheck className="h-5 w-5 text-emerald-600 shrink-0" />
             ) : (
-              <ShieldAlert className="h-5 w-5 text-rose-400 shrink-0" />
+              <ShieldAlert className="h-5 w-5 text-rose-600 shrink-0" />
             )}
             <span>{verifyResult.message}</span>
           </div>
-          <span className="text-[10px] text-slate-400">{verifyResult.timestamp}</span>
+          <span className="text-[11px] text-slate-500">{verifyResult.timestamp}</span>
         </div>
       )}
 
       {/* When Blockchain integration is NOT available */}
       {!isLive && (
-        <div className="rounded-lg bg-surface border border-border p-12 text-center space-y-4">
-          <div className="inline-flex p-4 rounded-full bg-slate-800/80 border border-slate-700 text-slate-400">
+        <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-12 text-center space-y-4">
+          <div className="inline-flex p-4 rounded-full bg-slate-100 border border-slate-200 text-slate-500">
             <Blocks className="h-8 w-8" />
           </div>
           <div className="space-y-1">
-            <h3 className="text-base font-bold text-white">
+            <h3 className="text-base font-semibold text-slate-900">
               Blockchain audit integration not available.
             </h3>
-            <p className="text-xs font-mono text-slate-400 max-w-lg mx-auto">
+            <p className="text-xs text-slate-500 max-w-lg mx-auto">
               Could not retrieve audit ledger records from{" "}
-              <code>{API_BASE_URL}/api/audit</code>. Ensure the backend FastAPI service is running.
+              <code className="bg-slate-100 text-slate-600 rounded px-1 font-mono">{API_BASE_URL}/api/audit</code>. Ensure the backend FastAPI service is running.
             </p>
           </div>
 
           <div className="pt-2">
             <button
               onClick={loadAudit}
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs font-mono text-slate-300 border border-slate-600 transition-colors"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-xs text-slate-700 transition-colors"
             >
               <RefreshCw className="h-3.5 w-3.5" />
               <span>Retry Ledger Connection</span>
@@ -222,32 +222,32 @@ export default function BlockchainAuditPage() {
       {isLive && auditData && (
         <div className="space-y-6">
           {/* Integrity KPIs: Incident ID / Verification status / Block count */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {/* 1. Verification Status */}
             <div
-              className={`rounded-lg bg-surface border p-4 flex items-center justify-between ${
+              className={`rounded-xl bg-white border shadow-sm p-4 flex items-center justify-between ${
                 auditData.valid
-                  ? "border-emerald-800/80 shadow-[0_0_15px_-3px_rgba(16,185,129,0.15)]"
-                  : "border-rose-800/80 shadow-[0_0_15px_-3px_rgba(239,68,68,0.2)]"
+                  ? "border-emerald-200"
+                  : "border-rose-200"
               }`}
             >
               <div>
-                <span className="text-[10px] uppercase text-slate-400 block font-semibold">
-                  VERIFICATION STATUS
+                <span className="text-xs text-slate-500 block font-medium">
+                  Verification status
                 </span>
                 <span
-                  className={`text-lg font-bold mt-1 block ${
-                    auditData.valid ? "text-emerald-400" : "text-rose-400"
+                  className={`text-lg font-semibold mt-1 block ${
+                    auditData.valid ? "text-emerald-600" : "text-rose-600"
                   }`}
                 >
-                  {auditData.valid ? "VALID & UNTAMPERED" : "TAMPER DETECTED"}
+                  {auditData.valid ? "Valid & untampered" : "Tamper detected"}
                 </span>
               </div>
               <div
                 className={`p-2.5 rounded-lg ${
                   auditData.valid
-                    ? "bg-emerald-950 text-emerald-400"
-                    : "bg-rose-950 text-rose-400"
+                    ? "bg-emerald-50 text-emerald-600"
+                    : "bg-rose-50 text-rose-600"
                 }`}
               >
                 {auditData.valid ? (
@@ -259,34 +259,34 @@ export default function BlockchainAuditPage() {
             </div>
 
             {/* 2. Block Number / Total Blocks */}
-            <div className="rounded-lg bg-surface border border-border p-4 flex items-center justify-between">
+            <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-4 flex items-center justify-between">
               <div>
-                <span className="text-[10px] uppercase text-slate-400 block font-semibold">
-                  TOTAL AUDITED BLOCKS
+                <span className="text-xs text-slate-500 block font-medium">
+                  Total audited blocks
                 </span>
-                <span className="text-3xl font-bold text-white mt-1 block">
+                <span className="text-3xl font-semibold text-slate-900 mt-1 block">
                   {auditData.length}
                 </span>
               </div>
-              <div className="p-2.5 rounded-lg bg-slate-800 text-cyan-400">
+              <div className="p-2.5 rounded-lg bg-indigo-50 text-indigo-600">
                 <Blocks className="h-6 w-6" />
               </div>
             </div>
 
             {/* 3. Latest Hash */}
-            <div className="rounded-lg bg-surface border border-border p-4 flex flex-col justify-between">
+            <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-4 flex flex-col justify-between">
               <div>
-                <span className="text-[10px] uppercase text-slate-400 block font-semibold">
-                  LATEST HEAD HASH
+                <span className="text-xs text-slate-500 block font-medium">
+                  Latest head hash
                 </span>
-                <code className="text-xs text-cyan-400 font-bold break-all block mt-1">
+                <code className="text-xs text-indigo-600 font-semibold font-mono break-all block mt-1">
                   {auditData.last_hash
                     ? `${auditData.last_hash.slice(0, 24)}...`
                     : "N/A"}
                 </code>
               </div>
-              <span className="text-[10px] text-slate-500 mt-2">
-                SHA-256 Merkle Chaining
+              <span className="text-[11px] text-slate-500 mt-2">
+                SHA-256 Merkle chaining
               </span>
             </div>
           </div>
@@ -294,31 +294,31 @@ export default function BlockchainAuditPage() {
           {/* Block Table:
               Required columns by prompt:
               Incident ID, Hash, Timestamp, Transaction ID, Block number, Verification status */}
-          <div className="rounded-lg bg-surface border border-border p-5 space-y-4">
+          <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
               <div className="flex items-center gap-2">
-                <Blocks className="h-4 w-4 text-cyan-400" />
-                <h3 className="text-sm font-semibold text-white">
+                <Blocks className="h-4 w-4 text-indigo-600" />
+                <h3 className="text-sm font-semibold text-slate-900">
                   Cryptographic Ledger Explorer ({blocks.length} Blocks)
                 </h3>
               </div>
 
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-500" />
+                <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-slate-400" />
                 <input
                   type="text"
                   placeholder="Search by event or hash..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8 pr-3 py-1.5 bg-surface-subtle border border-border rounded text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 w-48 sm:w-64"
+                  className="pl-8 pr-3 py-1.5 bg-white border border-slate-300 rounded text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 w-48 sm:w-64"
                 />
               </div>
             </div>
 
-            <div className="overflow-x-auto border border-border/80 rounded-md bg-surface-subtle">
+            <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white">
               <table className="w-full text-left text-xs border-collapse min-w-[760px]">
                 <thead>
-                  <tr className="border-b border-border bg-slate-900/60 font-mono text-[11px] text-slate-400">
+                  <tr className="border-b border-slate-200 bg-slate-50 text-[11px] text-slate-500">
                     <th className="py-2.5 px-3 font-semibold">Block #</th>
                     <th className="py-2.5 px-3 font-semibold">Incident / Event ID</th>
                     <th className="py-2.5 px-3 font-semibold">Transaction Hash</th>
@@ -328,40 +328,40 @@ export default function BlockchainAuditPage() {
                     <th className="py-2.5 px-3 text-right">Copy</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/50 font-mono">
+                <tbody className="divide-y divide-slate-100">
                   {filteredBlocks.map((b) => (
                     <tr
                       key={b.index}
-                      className="hover:bg-surface-hover/70 transition-colors"
+                      className="hover:bg-slate-50 transition-colors"
                     >
-                      <td className="py-3 px-3 font-bold text-cyan-400">
+                      <td className="py-3 px-3 font-semibold text-indigo-600 font-mono">
                         #{b.index}
                       </td>
 
                       <td className="py-3 px-3">
-                        <span className="px-2 py-0.5 rounded bg-indigo-950/60 text-indigo-300 border border-indigo-800/50 text-[11px] font-semibold">
+                        <span className="px-2 py-0.5 rounded bg-indigo-50 text-indigo-700 border border-indigo-200 text-[11px] font-medium">
                           {b.event_type || "TELEMETRY_EVENT"}
                         </span>
                       </td>
 
                       <td className="py-3 px-3">
-                        <code className="text-slate-200 text-[11px]">
+                        <code className="text-slate-700 text-[11px] font-mono">
                           {b.hash.slice(0, 16)}...
                         </code>
                       </td>
 
-                      <td className="py-3 px-3 text-[11px] text-slate-400">
+                      <td className="py-3 px-3 text-[11px] text-slate-500 font-mono">
                         {b.timestamp}
                       </td>
 
                       <td className="py-3 px-3">
-                        <code className="text-slate-500 text-[11px]">
+                        <code className="text-slate-500 text-[11px] font-mono">
                           {b.previous_hash.slice(0, 14)}...
                         </code>
                       </td>
 
                       <td className="py-3 px-3">
-                        <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400">
+                        <span className="inline-flex items-center gap-1 text-[11px] text-emerald-600">
                           <CheckCircle2 className="h-3.5 w-3.5" />
                           <span>Chained & Verified</span>
                         </span>
@@ -370,11 +370,11 @@ export default function BlockchainAuditPage() {
                       <td className="py-3 px-3 text-right">
                         <button
                           onClick={() => copyToClipboard(b.hash)}
-                          className="p-1 rounded text-slate-400 hover:text-cyan-400 hover:bg-slate-800 transition-colors inline-flex items-center gap-1"
+                          className="p-1 rounded text-slate-500 hover:text-indigo-600 hover:bg-slate-100 transition-colors inline-flex items-center gap-1"
                           title="Copy full cryptographic hash"
                         >
                           {copiedHash === b.hash ? (
-                            <Check className="h-3.5 w-3.5 text-emerald-400" />
+                            <Check className="h-3.5 w-3.5 text-emerald-600" />
                           ) : (
                             <Copy className="h-3.5 w-3.5" />
                           )}

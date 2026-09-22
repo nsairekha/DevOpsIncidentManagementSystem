@@ -134,24 +134,24 @@ export default function DashboardPage() {
   return (
     <div className="space-y-6">
       {/* Live / Fallback Mode Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             {isLive && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             )}
             <span
               className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                isLive ? "bg-emerald-400" : "bg-amber-400"
+                isLive ? "bg-emerald-500" : "bg-amber-500"
               }`}
             />
           </span>
-          <div className="text-xs font-mono">
-            <span className="font-bold text-white uppercase tracking-wide">
-              {isLive ? "LIVE BACKEND CONNECTED" : "DEMO FALLBACK (Backend Offline)"}
+          <div className="text-xs">
+            <span className="font-semibold text-slate-900">
+              {isLive ? "Live backend connected" : "Demo fallback (backend offline)"}
             </span>
-            <span className="text-slate-400 ml-2">
-              Endpoint: <code>{API_BASE_URL}</code>
+            <span className="text-slate-500 ml-2">
+              Endpoint: <code className="bg-slate-100 text-slate-600 rounded px-1">{API_BASE_URL}</code>
             </span>
           </div>
         </div>
@@ -167,7 +167,7 @@ export default function DashboardPage() {
           {!isLive && (
             <button
               onClick={() => setAllowFallback(!allowFallback)}
-              className="text-[11px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
+              className="text-[11px] px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition-colors"
             >
               {allowFallback ? "Hide Demo Data" : "Show Demo Data"}
             </button>
@@ -187,16 +187,16 @@ export default function DashboardPage() {
       {/* Page Title & Status */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <h2 className="text-xl font-bold text-white tracking-tight">
+          <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
             System Overview & SRE Health
           </h2>
-          <p className="text-xs font-mono text-slate-400">
+          <p className="text-sm text-slate-500">
             Live telemetry data retrieved from FastAPI & Prometheus pipeline
           </p>
         </div>
 
         {promStatusMessage && (
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-950/60 text-amber-300 border border-amber-800/60 text-xs font-mono">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-50 text-amber-700 border border-amber-200 text-xs">
             <Info className="h-3.5 w-3.5 shrink-0" />
             <span>{promStatusMessage}</span>
           </div>
@@ -308,7 +308,7 @@ export default function DashboardPage() {
             {
               key: "requestRate",
               name: "Request Rate",
-              color: "#06b6d4",
+              color: "#4F46E5",
               strokeWidth: 2,
             },
           ]}
@@ -327,7 +327,7 @@ export default function DashboardPage() {
             {
               key: "errorRate",
               name: "Error Rate (%)",
-              color: "#f43f5e",
+              color: "#DC2626",
               strokeWidth: 2,
             },
           ]}
@@ -347,13 +347,13 @@ export default function DashboardPage() {
             {
               key: "p95Latency",
               name: "P95 Latency",
-              color: "#f59e0b",
+              color: "#D97706",
               strokeWidth: 2,
             },
             {
               key: "p99Latency",
               name: "P99 Latency",
-              color: "#ef4444",
+              color: "#DC2626",
               strokeWidth: 2,
               strokeDasharray: "4 2",
             },
@@ -374,13 +374,13 @@ export default function DashboardPage() {
             {
               key: "cpuUtilization",
               name: "CPU Utilization",
-              color: "#38bdf8",
+              color: "#2563EB",
               strokeWidth: 2,
             },
             {
               key: "memoryUtilization",
               name: "Memory Utilization",
-              color: "#a855f7",
+              color: "#7C3AED",
               strokeWidth: 2,
             },
           ]}
@@ -391,10 +391,10 @@ export default function DashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <div>
-            <h3 className="text-sm font-semibold text-slate-200 tracking-tight">
+            <h3 className="text-sm font-semibold text-slate-900 tracking-tight">
               Microservice Fleet Status
             </h3>
-            <p className="text-[11px] font-mono text-slate-400">
+            <p className="text-xs text-slate-500">
               {isLive
                 ? "Live status reported by /api/v1/metrics/summary"
                 : "Development fallback preview (Ports 8001-8004)"}
@@ -402,7 +402,7 @@ export default function DashboardPage() {
           </div>
           <a
             href="/services"
-            className="text-xs font-mono text-cyan-400 hover:underline"
+            className="text-sm text-indigo-600 hover:text-indigo-700"
           >
             View all services →
           </a>

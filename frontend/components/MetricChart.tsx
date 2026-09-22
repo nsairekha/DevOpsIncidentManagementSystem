@@ -49,23 +49,23 @@ export default function MetricChart({
   const customTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {
       return (
-        <div className="rounded-md border border-border bg-slate-900/95 p-2.5 shadow-xl backdrop-blur-sm text-xs font-mono">
-          <p className="text-slate-400 font-semibold mb-1 border-b border-border/60 pb-1">
-            Time: {label}
+        <div className="rounded-lg border border-slate-200 bg-white p-2.5 shadow-lg text-xs">
+          <p className="text-slate-500 font-medium mb-1 border-b border-slate-200 pb-1">
+            Time: <span className="font-mono">{label}</span>
           </p>
           {payload.map((entry: any, index: number) => (
             <div
               key={`item-${index}`}
               className="flex items-center justify-between gap-4 py-0.5"
             >
-              <span className="flex items-center gap-1.5" style={{ color: entry.color }}>
+              <span className="flex items-center gap-1.5 text-slate-500">
                 <span
                   className="inline-block w-2 h-2 rounded-full"
                   style={{ backgroundColor: entry.color }}
                 />
                 {entry.name}:
               </span>
-              <span className="font-bold text-white">
+              <span className="font-semibold text-slate-900">
                 {typeof entry.value === "number"
                   ? entry.value.toFixed(2)
                   : entry.value}{" "}
@@ -80,18 +80,18 @@ export default function MetricChart({
   };
 
   return (
-    <div className="rounded-lg bg-surface border border-border p-4 flex flex-col justify-between">
+    <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 flex flex-col justify-between">
       <div className="flex items-start justify-between mb-3">
         <div>
-          <h4 className="text-sm font-semibold text-slate-200 tracking-tight">
+          <h4 className="text-sm font-semibold text-slate-900 tracking-tight">
             {title}
           </h4>
           {subtitle && (
-            <p className="text-[11px] font-mono text-slate-400">{subtitle}</p>
+            <p className="text-[11px] text-slate-500">{subtitle}</p>
           )}
         </div>
         {unit && (
-          <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-surface-subtle border border-border/70 text-slate-400">
+          <span className="text-[11px] px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-500">
             {unit}
           </span>
         )}
@@ -104,36 +104,21 @@ export default function MetricChart({
               data={data}
               margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
             >
-              <defs>
-                {series.map((s) => (
-                  <linearGradient
-                    key={s.key}
-                    id={`grad-${s.key}`}
-                    x1="0"
-                    y1="0"
-                    x2="0"
-                    y2="1"
-                  >
-                    <stop offset="5%" stopColor={s.color} stopOpacity={0.35} />
-                    <stop offset="95%" stopColor={s.color} stopOpacity={0.0} />
-                  </linearGradient>
-                ))}
-              </defs>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#1e293b"
+                stroke="#E5E7EB"
                 vertical={false}
               />
               <XAxis
                 dataKey={xAxisKey}
-                stroke="#475569"
-                tick={{ fill: "#64748b", fontSize: 11, fontFamily: "monospace" }}
+                stroke="#E5E7EB"
+                tick={{ fill: "#6B7280", fontSize: 11 }}
                 tickLine={false}
-                axisLine={{ stroke: "#1e293b" }}
+                axisLine={{ stroke: "#E5E7EB" }}
               />
               <YAxis
-                stroke="#475569"
-                tick={{ fill: "#64748b", fontSize: 11, fontFamily: "monospace" }}
+                stroke="#E5E7EB"
+                tick={{ fill: "#6B7280", fontSize: 11 }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(val) =>
@@ -145,7 +130,6 @@ export default function MetricChart({
                 <Legend
                   wrapperStyle={{
                     fontSize: "11px",
-                    fontFamily: "monospace",
                     paddingTop: "6px",
                   }}
                 />
@@ -158,8 +142,8 @@ export default function MetricChart({
                   name={s.name}
                   stroke={s.color}
                   strokeWidth={s.strokeWidth || 2}
-                  fillOpacity={1}
-                  fill={`url(#grad-${s.key})`}
+                  fill={s.color}
+                  fillOpacity={0.1}
                 />
               ))}
             </AreaChart>
@@ -170,19 +154,19 @@ export default function MetricChart({
             >
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke="#1e293b"
+                stroke="#E5E7EB"
                 vertical={false}
               />
               <XAxis
                 dataKey={xAxisKey}
-                stroke="#475569"
-                tick={{ fill: "#64748b", fontSize: 11, fontFamily: "monospace" }}
+                stroke="#E5E7EB"
+                tick={{ fill: "#6B7280", fontSize: 11 }}
                 tickLine={false}
-                axisLine={{ stroke: "#1e293b" }}
+                axisLine={{ stroke: "#E5E7EB" }}
               />
               <YAxis
-                stroke="#475569"
-                tick={{ fill: "#64748b", fontSize: 11, fontFamily: "monospace" }}
+                stroke="#E5E7EB"
+                tick={{ fill: "#6B7280", fontSize: 11 }}
                 tickLine={false}
                 axisLine={false}
                 tickFormatter={(val) =>
@@ -194,7 +178,6 @@ export default function MetricChart({
                 <Legend
                   wrapperStyle={{
                     fontSize: "11px",
-                    fontFamily: "monospace",
                     paddingTop: "6px",
                   }}
                 />
@@ -209,7 +192,7 @@ export default function MetricChart({
                   strokeWidth={s.strokeWidth || 2}
                   strokeDasharray={s.strokeDasharray}
                   dot={false}
-                  activeDot={{ r: 4, stroke: "#0f172a", strokeWidth: 2 }}
+                  activeDot={{ r: 4, stroke: "#FFFFFF", strokeWidth: 2 }}
                 />
               ))}
             </LineChart>

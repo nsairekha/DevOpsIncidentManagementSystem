@@ -140,24 +140,24 @@ export default function AnomaliesPage() {
   return (
     <div className="space-y-6">
       {/* Live / Demo Header Banner */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-surface border border-border">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-xl bg-white border border-slate-200 shadow-sm">
         <div className="flex items-center gap-2.5">
           <span className="relative flex h-2.5 w-2.5">
             {isLive && (
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75" />
             )}
             <span
               className={`relative inline-flex rounded-full h-2.5 w-2.5 ${
-                isLive ? "bg-emerald-400" : "bg-amber-400"
+                isLive ? "bg-emerald-500" : "bg-amber-500"
               }`}
             />
           </span>
-          <div className="text-xs font-mono">
-            <span className="font-bold text-white uppercase tracking-wide">
-              {isLive ? "LIVE ANOMALIES STREAM" : "DEMO DATA (Backend Offline)"}
+          <div className="text-xs">
+            <span className="font-semibold text-slate-900">
+              {isLive ? "Live anomalies stream" : "Demo data (backend offline)"}
             </span>
-            <span className="text-slate-400 ml-2">
-              Source: <code>{API_BASE_URL}/api/v1/baselines</code>
+            <span className="text-slate-500 ml-2">
+              Source: <code className="bg-slate-100 text-slate-600 rounded px-1 font-mono">{API_BASE_URL}/api/v1/baselines</code>
             </span>
           </div>
         </div>
@@ -172,7 +172,7 @@ export default function AnomaliesPage() {
           {!isLive && (
             <button
               onClick={() => setAllowFallback(!allowFallback)}
-              className="text-[11px] font-mono px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition-colors"
+              className="text-[11px] px-2 py-1 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 border border-slate-200 transition-colors"
             >
               {allowFallback ? "Hide Demo Data" : "Show Demo Data"}
             </button>
@@ -181,28 +181,28 @@ export default function AnomaliesPage() {
       </div>
 
       {statusMessage && (
-        <div className="p-3 rounded-lg bg-surface-subtle border border-border text-xs font-mono text-slate-300">
+        <div className="p-3 rounded-xl bg-white border border-slate-200 shadow-sm text-xs text-slate-600">
           {statusMessage}
         </div>
       )}
 
       {/* Title */}
       <div>
-        <h2 className="text-xl font-bold text-white tracking-tight">
+        <h2 className="text-xl font-semibold text-slate-900 tracking-tight">
           Telemetry Anomalies & Outlier Detection
         </h2>
-        <p className="text-xs font-mono text-slate-400">
+        <p className="text-sm text-slate-500">
           Unsupervised dynamic thresholding via Z-Score, IQR, and Isolation Forest
         </p>
       </div>
 
       {/* Main Anomalies Table: Required Columns:
           Time, Service, Metric, Anomaly Type, Current Value, Baseline, Deviation, Severity, Status */}
-      <div className="rounded-lg bg-surface border border-border p-5 space-y-4">
+      <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-5 space-y-4">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2">
-            <AlertTriangle className="h-4 w-4 text-amber-400" />
-            <h3 className="text-sm font-semibold text-white">
+            <AlertTriangle className="h-4 w-4 text-amber-600" />
+            <h3 className="text-sm font-semibold text-slate-900">
               Flagged Telemetry Deviations ({filtered.length})
             </h3>
           </div>
@@ -215,14 +215,14 @@ export default function AnomaliesPage() {
                 placeholder="Search anomalies..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="pl-8 pr-3 py-1.5 bg-surface-subtle border border-border rounded text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-cyan-500 w-36 sm:w-48"
+                className="pl-8 pr-3 py-1.5 bg-white border border-slate-300 rounded text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 w-36 sm:w-48"
               />
             </div>
 
             <select
               value={serviceFilter}
               onChange={(e) => setServiceFilter(e.target.value)}
-              className="bg-surface-subtle border border-border rounded px-2.5 py-1.5 text-xs font-mono text-slate-300 focus:outline-none focus:border-cyan-500"
+              className="bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
             >
               <option value="ALL">All Services</option>
               <option value="Payment Service">Payment Service</option>
@@ -234,10 +234,10 @@ export default function AnomaliesPage() {
         </div>
 
         {/* Responsive Table */}
-        <div className="overflow-x-auto border border-border/80 rounded-md bg-surface-subtle">
+        <div className="overflow-x-auto border border-slate-200 rounded-lg bg-white">
           <table className="w-full text-left text-xs border-collapse min-w-[760px]">
             <thead>
-              <tr className="border-b border-border bg-slate-900/60 font-mono text-[11px] text-slate-400">
+              <tr className="border-b border-slate-200 bg-slate-50 text-[11px] text-slate-500">
                 <th className="py-2.5 px-3 font-semibold">Time</th>
                 <th className="py-2.5 px-3 font-semibold">Service</th>
                 <th className="py-2.5 px-3 font-semibold">Metric</th>
@@ -249,41 +249,41 @@ export default function AnomaliesPage() {
                 <th className="py-2.5 px-3 font-semibold">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/50 font-mono">
+            <tbody className="divide-y divide-slate-100">
               {filtered.map((a) => (
                 <tr
                   key={a.id}
                   onClick={() => setSelectedAnomaly(a)}
-                  className="hover:bg-surface-hover/70 transition-colors cursor-pointer group"
+                  className="hover:bg-slate-50 transition-colors cursor-pointer group"
                 >
-                  <td className="py-3 px-3 text-[11px] text-slate-400">
+                  <td className="py-3 px-3 text-[11px] text-slate-500">
                     {a.time}
                   </td>
 
-                  <td className="py-3 px-3 font-semibold text-slate-200">
+                  <td className="py-3 px-3 font-semibold text-slate-900">
                     {a.service}
                   </td>
 
-                  <td className="py-3 px-3 text-cyan-400 font-medium">
+                  <td className="py-3 px-3 text-indigo-600 font-medium">
                     {a.metric}
                   </td>
 
-                  <td className="py-3 px-3 text-[11px] text-slate-400">
-                    <span className="px-2 py-0.5 rounded bg-slate-800 border border-slate-700">
+                  <td className="py-3 px-3 text-[11px] text-slate-500">
+                    <span className="px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600">
                       {a.anomalyType}
                     </span>
                   </td>
 
-                  <td className="py-3 px-3 font-bold text-rose-400">
+                  <td className="py-3 px-3 font-semibold text-rose-600">
                     {a.currentValue}
                   </td>
 
-                  <td className="py-3 px-3 text-slate-400">
+                  <td className="py-3 px-3 text-slate-500">
                     {a.baseline}
                   </td>
 
                   <td className="py-3 px-3">
-                    <span className="font-bold px-2 py-0.5 rounded bg-rose-950/60 text-rose-300 border border-rose-800/50">
+                    <span className="font-semibold px-2 py-0.5 rounded bg-rose-50 text-rose-700 border border-rose-200">
                       {a.deviation}
                     </span>
                   </td>
@@ -309,74 +309,74 @@ export default function AnomaliesPage() {
       {/* Details View Modal when clicking an anomaly */}
       {selectedAnomaly && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-xl bg-surface border border-border shadow-2xl p-6 space-y-4 font-mono text-xs animate-in fade-in-50 zoom-in-95 duration-150">
-            <div className="flex items-start justify-between border-b border-border/80 pb-3">
+          <div className="w-full max-w-lg rounded-xl bg-white border border-slate-200 shadow-xl p-6 space-y-4 text-xs animate-in fade-in-50 zoom-in-95 duration-150">
+            <div className="flex items-start justify-between border-b border-slate-100 pb-3">
               <div>
                 <div className="flex items-center gap-2 mb-1">
-                  <span className="text-cyan-400 font-bold">
+                  <span className="text-indigo-600 font-semibold font-mono">
                     {selectedAnomaly.id}
                   </span>
                   <StatusBadge status={selectedAnomaly.severity} size="sm" />
                   <StatusBadge status={selectedAnomaly.status} size="sm" />
                 </div>
-                <h3 className="text-sm font-bold text-white font-sans">
+                <h3 className="text-sm font-semibold text-slate-900">
                   {selectedAnomaly.anomalyType} on {selectedAnomaly.service}
                 </h3>
               </div>
               <button
                 onClick={() => setSelectedAnomaly(null)}
-                className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800"
+                className="p-1 rounded text-slate-500 hover:text-slate-900 hover:bg-slate-100"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-3 p-3 rounded-lg bg-surface-subtle border border-border/60">
+            <div className="grid grid-cols-2 gap-3 p-3 rounded-lg bg-slate-50 border border-slate-200">
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
-                  Observed Signal
+                <span className="text-[11px] text-slate-500 block">
+                  Observed signal
                 </span>
-                <span className="text-white font-bold">{selectedAnomaly.metric}</span>
+                <span className="text-slate-900 font-semibold">{selectedAnomaly.metric}</span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
-                  Anomaly Score
+                <span className="text-[11px] text-slate-500 block">
+                  Anomaly score
                 </span>
-                <span className="text-cyan-400 font-bold">
+                <span className="text-indigo-600 font-semibold font-mono">
                   {selectedAnomaly.score.toFixed(2)}σ
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
-                  Current vs Baseline
+                <span className="text-[11px] text-slate-500 block">
+                  Current vs baseline
                 </span>
-                <span className="text-rose-400 font-bold">
+                <span className="text-rose-600 font-semibold">
                   {selectedAnomaly.currentValue} (Base: {selectedAnomaly.baseline})
                 </span>
               </div>
               <div>
-                <span className="text-[10px] text-slate-400 uppercase block">
+                <span className="text-[11px] text-slate-500 block">
                   Deviation
                 </span>
-                <span className="text-rose-400 font-bold">
+                <span className="text-rose-600 font-semibold">
                   {selectedAnomaly.deviation}
                 </span>
               </div>
             </div>
 
             <div>
-              <span className="text-slate-400 font-semibold block mb-1">
-                Diagnostic Details:
+              <span className="text-slate-600 font-medium block mb-1">
+                Diagnostic details:
               </span>
-              <p className="text-slate-300 font-sans leading-relaxed">
+              <p className="text-slate-700 leading-relaxed">
                 {selectedAnomaly.details}
               </p>
             </div>
 
-            <div className="pt-3 border-t border-border flex justify-end">
+            <div className="pt-3 border-t border-slate-200 flex justify-end">
               <button
                 onClick={() => setSelectedAnomaly(null)}
-                className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700"
+                className="px-3 py-1.5 rounded-lg bg-white border border-slate-300 hover:bg-slate-50 text-slate-700"
               >
                 Close Inspector
               </button>
@@ -386,28 +386,28 @@ export default function AnomaliesPage() {
       )}
 
       {/* Live AI Anomaly Detection Pipeline Tester */}
-      <div className="rounded-lg bg-surface border border-border p-6 space-y-4">
-        <div className="flex items-center justify-between border-b border-border/80 pb-3">
+      <div className="rounded-xl bg-white border border-slate-200 shadow-sm p-6 space-y-4">
+        <div className="flex items-center justify-between border-b border-slate-100 pb-3">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-indigo-950/70 text-indigo-400 border border-indigo-800/50">
+            <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600 border border-indigo-100">
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white">
+              <h3 className="text-sm font-semibold text-slate-900">
                 Live Anomaly Pipeline Tester (/api/analyze)
               </h3>
-              <p className="text-[11px] font-mono text-slate-400">
+              <p className="text-xs text-slate-500">
                 Fit training baseline and test live signals with Z-score, IQR, or Isolation Forest
               </p>
             </div>
           </div>
         </div>
 
-        <form onSubmit={handleRunAnalysis} className="space-y-4 text-xs font-mono">
+        <form onSubmit={handleRunAnalysis} className="space-y-4 text-xs">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div>
-              <label className="block text-slate-300 mb-1 font-semibold">
-                Detector Model
+              <label className="block text-slate-600 mb-1 font-medium">
+                Detector model
               </label>
               <select
                 value={detector}
@@ -416,7 +416,7 @@ export default function AnomaliesPage() {
                     e.target.value as "zscore" | "iqr" | "isolation_forest"
                   )
                 }
-                className="w-full bg-surface-subtle border border-border rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
               >
                 <option value="zscore">Z-Score (Standard Deviations)</option>
                 <option value="iqr">IQR (Interquartile Range)</option>
@@ -425,20 +425,20 @@ export default function AnomaliesPage() {
             </div>
 
             <div>
-              <label className="block text-slate-300 mb-1 font-semibold">
-                Metric Signal Name
+              <label className="block text-slate-600 mb-1 font-medium">
+                Metric signal name
               </label>
               <input
                 type="text"
                 value={signalName}
                 onChange={(e) => setSignalName(e.target.value)}
-                className="w-full bg-surface-subtle border border-border rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
               />
             </div>
 
             <div>
-              <label className="block text-slate-300 mb-1 font-semibold">
-                Sensitivity Threshold (σ)
+              <label className="block text-slate-600 mb-1 font-medium">
+                Sensitivity threshold
               </label>
               <input
                 type="number"
@@ -447,33 +447,33 @@ export default function AnomaliesPage() {
                 max="5.0"
                 value={threshold}
                 onChange={(e) => setThreshold(e.target.value)}
-                className="w-full bg-surface-subtle border border-border rounded px-3 py-2 text-slate-200 focus:outline-none focus:border-cyan-500"
+                className="w-full bg-white border border-slate-300 rounded px-3 py-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div>
-              <label className="block text-slate-300 mb-1 font-semibold">
-                Reference Training Window
+              <label className="block text-slate-600 mb-1 font-medium">
+                Reference training window
               </label>
               <textarea
                 rows={2}
                 value={referenceWindow}
                 onChange={(e) => setReferenceWindow(e.target.value)}
-                className="w-full bg-surface-subtle border border-border rounded p-2 text-slate-200 focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-white border border-slate-300 rounded p-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 font-mono"
               />
             </div>
 
             <div>
-              <label className="block text-slate-300 mb-1 font-semibold">
-                Telemetry Window to Inspect
+              <label className="block text-slate-600 mb-1 font-medium">
+                Telemetry window to inspect
               </label>
               <textarea
                 rows={2}
                 value={telemetryWindow}
                 onChange={(e) => setTelemetryWindow(e.target.value)}
-                className="w-full bg-surface-subtle border border-border rounded p-2 text-slate-200 focus:outline-none focus:border-cyan-500 font-mono"
+                className="w-full bg-white border border-slate-300 rounded p-2 text-slate-900 focus:outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 font-mono"
               />
             </div>
           </div>
@@ -482,7 +482,7 @@ export default function AnomaliesPage() {
             <button
               type="submit"
               disabled={runningAnalysis}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-cyan-600 hover:bg-cyan-500 text-white font-semibold transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition-colors disabled:opacity-50"
             >
               <Play className="h-4 w-4 fill-current" />
               <span>
@@ -494,35 +494,35 @@ export default function AnomaliesPage() {
 
         {/* Live Output */}
         {analysisResult && (
-          <div className="rounded-lg bg-surface-subtle border border-border p-4 space-y-3 font-mono text-xs">
-            <div className="flex items-center justify-between border-b border-border/60 pb-2">
-              <span className="font-bold text-white">
+          <div className="rounded-lg bg-slate-50 border border-slate-200 p-4 space-y-3 text-xs">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+              <span className="font-semibold text-slate-900">
                 Detector: {analysisResult.detector} ({analysisResult.nFindings} finding(s))
               </span>
               <StatusBadge status={analysisResult.severity} size="sm" />
             </div>
-            <p className="text-slate-300">{analysisResult.summary}</p>
+            <p className="text-slate-600">{analysisResult.summary}</p>
             {analysisResult.findings.map((f, i) => (
               <div
                 key={i}
-                className="p-2.5 rounded bg-surface border border-border/80 flex items-center justify-between"
+                className="p-2.5 rounded bg-white border border-slate-200 flex items-center justify-between"
               >
                 <div>
-                  <span className="font-bold text-rose-400">{f.signal}</span>:{" "}
-                  <span className="text-white font-bold">{f.value}</span> (Score:{" "}
-                  <span className="text-cyan-400">{f.score.toFixed(2)}</span>)
-                  <span className="text-slate-400 ml-2">{f.details}</span>
+                  <span className="font-semibold text-rose-600">{f.signal}</span>:{" "}
+                  <span className="text-slate-900 font-semibold">{f.value}</span> (Score:{" "}
+                  <span className="text-indigo-600 font-mono">{f.score.toFixed(2)}</span>)
+                  <span className="text-slate-500 ml-2">{f.details}</span>
                 </div>
                 <StatusBadge status={f.severity} size="sm" />
               </div>
             ))}
             {analysisResult.audited && (
-              <div className="pt-2 border-t border-border/60 flex items-center justify-between text-[11px] text-slate-400">
-                <span className="text-emerald-400 flex items-center gap-1">
-                  <ShieldCheck className="h-3.5 w-3.5" /> Chained to Ledger:{" "}
-                  <code>{analysisResult.blockHash.slice(0, 16)}...</code>
+              <div className="pt-2 border-t border-slate-200 flex items-center justify-between text-[11px] text-slate-500">
+                <span className="text-emerald-600 flex items-center gap-1">
+                  <ShieldCheck className="h-3.5 w-3.5" /> Chained to ledger:{" "}
+                  <code className="bg-slate-100 rounded px-1 font-mono">{analysisResult.blockHash.slice(0, 16)}...</code>
                 </span>
-                <span>Event ID: <code>{analysisResult.eventId}</code></span>
+                <span>Event ID: <code className="bg-slate-100 rounded px-1 font-mono">{analysisResult.eventId}</code></span>
               </div>
             )}
           </div>
